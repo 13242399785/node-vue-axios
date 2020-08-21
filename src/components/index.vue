@@ -12,6 +12,7 @@
                 <li>4</li>
             </ul>
         </div>
+        
         <!-- <div><a :href='video' target="_blank" rel="noopener noreferrer">这是个连接到pdf的地址</a></div> -->
         <div class="childst clerfixed">
             <div class="btncontrol">
