@@ -2,8 +2,12 @@
 	<div class="web">
         <div class="tab clerfixed">
             <ul>
-                <li>1</li>
-                <li>2</li>
+                <li>
+                    <router-link to='content'>1</router-link>
+                </li>
+                <li>
+                    <router-link to='upload'>图片上传</router-link>
+                </li>
                 <li>3</li>
                 <li>4</li>
             </ul>
@@ -32,14 +36,12 @@
                         <td class="fire">
                             <label :for='list.Id'>
                                 <p v-show='list.e'>{{list.fine}}</p>
-                            </label>
-                            <input v-show='!list.e' ref="content" id='fo' name="" v-model='list.fine' class="input_control" @focus.prevent='focuson()' @blur.prevent="changeCount(listd,index,list.Id)">
+                            </label><input v-show='!list.e' ref="content" id='fo' type="number" name="" v-model='list.fine' class="input_control" @focus.prevent='focuson()' @blur.prevent="changeCount(listd,index,list.Id)">
                         </td>
                         <td class="notes">
                             <label :for='list.Id'>
                                 <p v-show='list.d'>{{list.remark}}</p>  
-                            </label>
-                            <input v-show='!list.d' ref="content1" type="" name="" v-model='list.remark' class="input_control" @focus.prevent='focuson1()' @blur.prevent="changeCount1(listd,index,list.Id)">
+                            </label><input v-show='!list.d' ref="content1" type="" name="" v-model='list.remark' class="input_control" @focus.prevent='focuson1()' @blur.prevent="changeCount1(listd,index,list.Id)">
                         </td>
                         <td class="control">
                             <button @click='edit(listd,index,list.id)'>修改</button>
@@ -78,7 +80,8 @@
     </div>
 </template>
 <script type="text/javascript">
-    import '../../static/js/rem.js'
+    import '../../static/js/rem.js';
+    import router from '../router/index.js';
     export default{
         name:'index',
         data(){
@@ -156,7 +159,7 @@
               
               console.log(this.eat.time)
               var that=this;
-              this.$axios.post('http://192.168.5.147:8888/insertinfo',this.$qs.stringify(that.eat)).then(function(res){
+              this.$axios.post('apis/insertinfo',this.$qs.stringify(that.eat)).then(function(res){
                 console.log(res)
                 if(res.data=='ok'){
                   that.showlist();
@@ -211,7 +214,7 @@
                 // if(len>1||len==0){
                 //     alert('请选择单条数据进行删除！')
                 // }else{
-                    this.$axios.delete('http://192.168.5.147:8888/deleteinfo',{
+                    this.$axios.delete('apis/deleteinfo',{
                         params:{
                             Id: that.checkone
                         },
@@ -268,7 +271,7 @@
                 this.video=decodeURI(this.video)
                 console.log('请求列表')
                 var that=this;
-                this.$axios.get('http://192.168.5.147:8888/listshow').then(function(res){
+                this.$axios.get('apis/listshow').then(function(res){
                     console.log(res.data)
                     that.listd=res.data;
                     that.countst=0;
@@ -278,7 +281,7 @@
                         // console.log(that.listd)
                         that.countst+=v.fine//总数
                     })
-                    // console.log(that.listd)
+                    console.log(that.listd)
                 }).catch(function(err){
                     console.log(err)
                 })
@@ -307,7 +310,7 @@
                         console.log('成功了') 
                         o[i].e=true;
                         o[i].d=true;
-                        that.$axios.post('http://192.168.5.147:8888/updateinfo',that.$qs.stringify(that.updateData)).then(function(res){
+                        that.$axios.post('apis/updateinfo',that.$qs.stringify(that.updateData)).then(function(res){
                             console.log(res.data)
                             that.showlist();
                         }).catch(function(err){
@@ -331,7 +334,7 @@
                         console.log('成功了')
                         o[i].e=true;
                         o[i].d=true;
-                        that.$axios.post('http://192.168.5.147:8888/updateinfo',that.$qs.stringify(that.updateData)).then(function(res){
+                        that.$axios.post('apis/updateinfo',that.$qs.stringify(that.updateData)).then(function(res){
                             console.log(res.data)
                             that.showlist();
                         }).catch(function(err){
@@ -369,13 +372,13 @@
         font-size: pxt(12px); }
         .tab{
             font-size: pxt(12px);
-            overflow: hidden;
+            overflow: hidden;//浮动清除
             ul{
                 li{
                     text-align: center;
                     float: left;
                     width: 25%;
-                    line-height: pxt(20px);
+                    line-height: pxt(40px);
                     background: #eee;
                     position: relative;
                 }
@@ -392,7 +395,8 @@
                 }
             }
         }
-        .childst{font-size: pxt(6px);transform: translate3d(0, 0, 0);filter: grayscale(100%);
+        .childst{font-size: pxt(6px);
+            // transform: translate3d(0, 0, 0);filter: grayscale(100%);
             .btncontrol{text-align: right;padding: 20px;
                 button{
                     padding: pxt(4px) pxt(20px);

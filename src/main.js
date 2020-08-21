@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import Axios from 'axios'
 import Qs from 'qs'
+
 Vue.prototype.$axios = Axios
 Vue.prototype.$qs = Qs
 
